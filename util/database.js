@@ -1,6 +1,6 @@
 export const productList = [
   {
-    id: 1,
+    id: '1',
     name: 'Strength of Character',
     slogan: 'Ready-made lemonade',
     note: 'Tough love from your nanna',
@@ -9,7 +9,7 @@ export const productList = [
   },
 
   {
-    id: 2,
+    id: '2',
     name: 'Wisdom',
     slogan: 'Die Weißheit mit dem Löffel fressen',
     note: 'Family-recipe handed down 6 generations',
@@ -18,7 +18,7 @@ export const productList = [
   },
 
   {
-    id: 3,
+    id: '3',
     name: 'Coolness',
     slogan: 'Cool as a cucumber',
     note: 'Brand-new',
@@ -27,7 +27,7 @@ export const productList = [
   },
 
   {
-    id: 4,
+    id: '4',
     name: 'Consideration',
     slogan: 'Walk on eggshells',
     note: 'Know someone who needs more empathy and sensitivity? Someone who needs to be more considerate of others?',
@@ -35,7 +35,7 @@ export const productList = [
   },
 
   {
-    id: 5,
+    id: '5',
     name: 'Embarrassment',
     slogan: 'Oh no',
     note: 'Second-hand',
