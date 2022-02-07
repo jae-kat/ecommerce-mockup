@@ -6,8 +6,17 @@ import { useState } from 'react';
 import Layout from '../components/Layout';
 import { productList } from '../util/database';
 
+const productsDiv = css`
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  max-width: 950px;
+  margin: 20px;
+`;
+
 const productCardStyles = css`
-  width: 500px;
+  width: 300px;
+  border: 2px solid #ccc;
 `;
 
 export default function Products(props) {
