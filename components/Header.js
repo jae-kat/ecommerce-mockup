@@ -1,7 +1,12 @@
 import { css } from '@emotion/react';
+import Link from 'next/link';
 
 const navStyles = css`
-  background-color: #ccc;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  width: 100vw;
+  background-color: powderblue;
   padding: 10px;
   ul {
     display: flex;
@@ -9,6 +14,11 @@ const navStyles = css`
   }
   li {
     list-style: none;
+    a {
+      :hover {
+        cursor: pointer;
+      }
+    }
   }
 `;
 
@@ -16,10 +26,26 @@ export default function Header() {
   return (
     <nav css={navStyles}>
       <ul>
-        <li>Home</li>
-        <li>Products</li>
-        <li>About</li>
-        <li>Cart</li>
+        <li>
+          <Link href="/">
+            <a>Home</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/products">
+            <a>Products</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/about">
+            <a>About</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/cart">
+            <a>Cart</a>
+          </Link>
+        </li>
       </ul>{' '}
     </nav>
   );
