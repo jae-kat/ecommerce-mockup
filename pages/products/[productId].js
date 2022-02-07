@@ -14,6 +14,7 @@ export default function ProductId(props) {
         <title>{props.product.name}</title>
       </Head>
       <div css={productDivStyles}>
+        <img src={props.product.image} alt="the product" width="500px" />
         <h1>{props.product.name}</h1>
         <p>{props.product.description}</p>
       </div>
