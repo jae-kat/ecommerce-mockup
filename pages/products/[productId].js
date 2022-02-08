@@ -119,9 +119,12 @@ export function getServerSideProps(context) {
     (singleProduct) => productId === singleProduct.id,
   );
 
+  const cartCookies = JSON.parse(context.req.cookies.cart || '[]');
+
   return {
     props: {
       product: matchingProduct,
+      cookies: cartCookies,
     },
   };
 }
