@@ -49,7 +49,7 @@ export default function Products(props) {
 
   function addOne(id) {
     // get the current cookie value
-    const currentCartCookies = JSON.parse(Cookies.get('cart')) || [];
+    const currentCartCookies = JSON.parse(Cookies.get('cart'));
     // add 1 to the amount in the cart
     const newCookies = currentCartCookies.map((cookie) => {
       if (cookie.id === id) {
@@ -66,21 +66,25 @@ export default function Products(props) {
 
   function removeOne(id) {
     // get the current cookie value
-    const currentCartCookies = JSON.parse(Cookies.get('cart')) || [];
-    // remove 1 from the amount in the cart
-    let newCookies = currentCartCookies.map((cookie) => {
-      if (cookie.id === id) {
-        if (cookie.amount - 1 === 0) {
-          return (newCookies = currentCartCookies.filter(
-            (item) => item.id !== id,
-          ));
-        } else {
+    const currentCartCookies = JSON.parse(Cookies.get('cart'));
+
+    const productCookie = currentCartCookies.find((cookie) => cookie.id === id);
+    let newCookies;
+
+    // delete the product cookie, if the amount goes below zero
+    // else remove 1 from the amount in the cart
+    if (productCookie.amount - 1 === 0) {
+      newCookies = currentCartCookies.filter((cookie) => cookie.id !== id);
+    } else {
+      newCookies = currentCartCookies.map((cookie) => {
+        if (cookie.id === id) {
           return { ...cookie, amount: cookie.amount - 1 };
+        } else {
+          return cookie;
         }
-      } else {
-        return cookie;
-      }
-    });
+      });
+    }
+
     // update cookie and state
     Cookies.set('cart', JSON.stringify(newCookies));
 
