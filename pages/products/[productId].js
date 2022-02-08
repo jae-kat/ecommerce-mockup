@@ -93,6 +93,21 @@ export default function ProductId(props) {
         <img src={props.product.image} alt="the product" width="500px" />
         <h1>{props.product.name}</h1>
         <p>{props.product.description}</p>
+        <button onClick={() => addToCart()}>
+          {productIsInCart ? 'Remove from cart' : 'Add to cart'}
+        </button>
+        {productIsInCart && (
+          <div>
+            <button onClick={() => addOne()}>+</button>
+            <p>
+              {
+                productCookies.find((cookie) => cookie.id === props.product.id)
+                  .amount
+              }
+            </p>
+            <button onClick={() => removeOne()}>-</button>
+          </div>
+        )}
       </div>
     </Layout>
   );
