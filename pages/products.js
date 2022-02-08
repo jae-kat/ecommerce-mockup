@@ -124,6 +124,9 @@ export default function Products(props) {
               {productIsAdded && (
                 <div>
                   <button onClick={() => addOne(product.id)}>+</button>
+                  <p>
+                    {cartProducts.find((item) => item.id === product.id).amount}
+                  </p>
                   <button onClick={() => removeOne(product.id)}>-</button>
                 </div>
               )}
