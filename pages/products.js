@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
 import Layout from '../components/Layout';
-import { productList } from '../util/database';
+import { readAllProducts } from '../util/database';
 
 const productsDiv = css`
   display: flex;
@@ -138,11 +138,17 @@ export default function Products(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   const cartCookies = context.req.cookies.cart || '[]';
   const productsInCart = JSON.parse(cartCookies);
 
+  // get the list from the database
+  const productList = await readAllProducts();
+
   return {
-    props: { productList, productsInCart },
+    props: {
+      productsInCart,
+      productList,
+    },
   };
 }
