@@ -8,7 +8,7 @@ const mainStyles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 60px 30px;
+  margin: 90px 30px;
 `;
 
 export default function Layout(props) {
