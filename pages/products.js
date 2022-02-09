@@ -95,10 +95,7 @@ export default function Products(props) {
     <Layout>
       <Head>
         <title>Products</title>
-        <meta
-          name="description"
-          content="products overview - bootcamp exercise"
-        />
+        <meta name="description" content="Products" />
       </Head>
       <div css={productsDiv}>
         {props.productList.map((product) => {
@@ -106,7 +103,7 @@ export default function Products(props) {
             (cartItem) => cartItem.id === product.id,
           );
           return (
-            <div key={`productsList-${product.id}`} css={productCardStyles}>
+            <div key={`productList-${product.id}`} css={productCardStyles}>
               <Link href={`/products/${product.id}`}>
                 <a>
                   <img
@@ -114,8 +111,9 @@ export default function Products(props) {
                     alt="placeholder example"
                     width="300px"
                   />
-                  <h1>{product.name}</h1>
-                  <p>{product.description}</p>
+                  <h1>{product.title}</h1>
+                  <h2>{product.slogan}</h2>
+                  <p>Price per item: {product.price}</p>
                 </a>
               </Link>
               <button onClick={() => addToCart(product.id)}>
