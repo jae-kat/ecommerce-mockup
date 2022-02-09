@@ -24,13 +24,52 @@ export default function Cart(props) {
     return props.cookies.some((cookie) => cookie.id === product.id);
   });
 
-export default function Cart() {
   return (
     <Layout>
       <Head>
         <title>Shopping Cart</title>
+        <meta name="description" content="View your shopping cart" />
       </Head>
-      <p>hello this is a shopping cart</p>
+      <div css={cartPageStyles}>
+        {cartItems.map((item) => {
+          const amountInCart = props.cookies.find(
+            (cookie) => cookie.id === item.id,
+          ).amount;
+          return (
+            <div css={itemStyles} key={`cartProduct-${item.id}`}>
+              <img src={item.image} alt="product" height="90px" />
+              <p>{item.title}</p>
+              <p>Amount: {amountInCart}</p>
+              <p>
+                Price per item: {item.price} Total: {item.price * amountInCart}{' '}
+              </p>
+            </div>
+          );
+        })}
+        <div css={itemStyles}>Total: </div>
+      </div>
     </Layout>
   );
 }
+
+export async function getServerSideProps(context) {
+  // get the cookie info
+  const cookies = JSON.parse(context.req.cookies.cart || '[]');
+  // get the productList from the database
+  const productList = await readAllProducts();
+
+  return {
+    props: {
+      cookies,
+      productList,
+    },
+  };
+}
+
+// on this page i need to display:
+// 1. a row for each product that's in the cart
+//  -- small image done
+//  -- title done
+//  -- amount and + - !! add changing the amount here
+//  -- price done
+// 2. the sum that will need to be paid !! do this
