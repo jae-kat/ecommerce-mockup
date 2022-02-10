@@ -21,6 +21,14 @@ const itemStyles = css`
   width: 60vw;
 `;
 
+const totalStyles = css`
+  margin: 15px;
+  border: 2px solid powderblue;
+  border-radius: 7px;
+  width: 60vw;
+  text-align: right;
+`;
+
 export default function Cart(props) {
   // find out which items are in the cart and put them in a state variable
   const [cartItems, setCartItems] = useState(
@@ -57,9 +65,22 @@ export default function Cart(props) {
 
           return (
             <div css={itemStyles} key={`cartProduct-${item.id}`}>
-              <img src={item.image} alt="product" height="90px" />
-              <p>{item.title}</p>
-              <p>Amount: {amountInCart}</p>
+              <Link href={`/products/${item.id}`}>
+                <a>
+                  <img src={item.image} alt="product" height="90px" />
+                </a>
+              </Link>
+              <Link href={`/products/${item.id}`}>
+                <a>
+                  <p>{item.title}</p>
+                </a>
+              </Link>
+              <div>
+                <p>Amount: {amountInCart}</p>
+                <button onClick={() => removeItem(item.id)}>
+                  Remove from Cart
+                </button>
+              </div>
               <p>
                 Price per item: {item.price} Total: {total}{' '}
               </p>
@@ -94,11 +115,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
-// on this page i need to display:
-// 1. a row for each product that's in the cart
-//  -- small image done
-//  -- title done
-//  -- amount and + - !! add changing the amount here
-//  -- price done
-// 2. the sum that will need to be paid !! do this
