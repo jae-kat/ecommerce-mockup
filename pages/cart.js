@@ -1,5 +1,8 @@
 import { css } from '@emotion/react';
+import Cookies from 'js-cookie';
 import Head from 'next/head';
+import Link from 'next/link';
+import { useState } from 'react';
 import Layout from '../components/Layout';
 import { readAllProducts } from '../util/database';
 
@@ -19,10 +22,24 @@ const itemStyles = css`
 `;
 
 export default function Cart(props) {
-  // find out which items are in the cart
-  const cartItems = props.productList.filter((product) => {
-    return props.cookies.some((cookie) => cookie.id === product.id);
-  });
+  // find out which items are in the cart and put them in a state variable
+  const [cartItems, setCartItems] = useState(
+    props.productList.filter((product) => {
+      return props.cookies.some((cookie) => cookie.id === product.id);
+    }),
+  );
+  // this variable will save the total price of each product in an array
+  let itemTotals = [];
+
+  function removeItem(id) {
+    // update the cart state variable
+    const updatedCartItems = cartItems.filter((item) => item.id !== id);
+    setCartItems([...updatedCartItems]);
+    // update the cookies
+    const currentCookies = JSON.parse(Cookies.get('cart'));
+    const newCookies = currentCookies.filter((cookie) => cookie.id !== id);
+    Cookies.set('cart', JSON.stringify(newCookies));
+  }
 
   return (
     <Layout>
