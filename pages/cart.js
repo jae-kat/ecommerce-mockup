@@ -52,18 +52,30 @@ export default function Cart(props) {
           const amountInCart = props.cookies.find(
             (cookie) => cookie.id === item.id,
           ).amount;
+          const total = item.price * amountInCart;
+          itemTotals = [...itemTotals, total];
+
           return (
             <div css={itemStyles} key={`cartProduct-${item.id}`}>
               <img src={item.image} alt="product" height="90px" />
               <p>{item.title}</p>
               <p>Amount: {amountInCart}</p>
               <p>
-                Price per item: {item.price} Total: {item.price * amountInCart}{' '}
+                Price per item: {item.price} Total: {total}{' '}
               </p>
             </div>
           );
         })}
-        <div css={itemStyles}>Total: </div>
+        {itemTotals.length === 0 ? (
+          'There are currently no products in your cart'
+        ) : (
+          <div css={totalStyles}>
+            {`Total: ${itemTotals.reduce((previousValue, currentValue) => {
+              return previousValue + currentValue;
+            }, 0)}
+            `}
+          </div>
+        )}
       </div>
     </Layout>
   );
