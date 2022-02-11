@@ -6,7 +6,8 @@ exports.up = async (sql) => {
 		slogan varchar(50) NOT NULL,
 		description varchar(300) NOT NULL,
 		image varchar(200) NOT NULL,
-		price integer NOT NULL
+		price integer NOT NULL,
+		color varchar(20)
 	)
 	`;
 };
