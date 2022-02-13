@@ -1,6 +1,10 @@
 import { css, Global } from '@emotion/react';
+import { useState } from 'react';
+import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
+  const [cartNumber, setCartNumber] = useState([]);
+
   return (
     <>
       <Global
@@ -9,10 +13,21 @@ function MyApp({ Component, pageProps }) {
           body {
             margin: 0;
             box-sizing: border-box;
+            font-family: sans-serif;
+            color: #5f6266;
+            button {
+              cursor: pointer;
+            }
           }
         `}
       />
-      <Component {...pageProps} />;
+      <Layout cartNumber={cartNumber} setCartNumber={setCartNumber}>
+        <Component
+          {...pageProps}
+          cartNumber={cartNumber}
+          setCartNumber={setCartNumber}
+        />
+      </Layout>
     </>
   );
 }
