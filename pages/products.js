@@ -54,8 +54,7 @@ export async function getServerSideProps(context) {
   // get the list from the database
   const productList = await readAllProducts();
   // get the cookies
-  const cartCookies = context.req.cookies.cart;
-  const cookies = JSON.parse(cartCookies || '[]');
+  const cookies = JSON.parse(context.req.cookies.cart || '[]');
 
   return {
     props: {
