@@ -1,5 +1,4 @@
 import { css } from '@emotion/react';
-import Cookies from 'js-cookie';
 import Link from 'next/link';
 
 const navStyles = css`
