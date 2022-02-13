@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
-import Layout from '../components/Layout';
 import { readAllProducts } from '../util/database';
 
 const cartPageStyles = css`
@@ -16,53 +15,50 @@ const itemStyles = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   margin: 15px;
-  border: 2px solid powderblue;
+  border: 2px solid rgba(200, 200, 200, 0.3);
   border-radius: 7px;
   width: 60vw;
+  img {
+    border-radius: 7px;
+  }
 `;
 
 const totalStyles = css`
   margin: 15px;
-  border: 2px solid powderblue;
+  border: 2px solid rgba(200, 200, 200, 0.3);
   border-radius: 7px;
   width: 60vw;
   text-align: right;
 `;
 
 export default function Cart(props) {
-  // find out which items are in the cart and put them in a state variable
-  const [cartItems, setCartItems] = useState(
-    props.productList.filter((product) => {
-      return props.cookies.some((cookie) => cookie.id === product.id);
-    }),
-  );
+  const [cart, setCart] = useState(props.cart);
+
   // this variable will save the total price of each product in an array
   let itemTotals = [];
 
   function removeItem(id) {
     // update the cart state variable
-    const updatedCartItems = cartItems.filter((item) => item.id !== id);
-    setCartItems([...updatedCartItems]);
+    const updatedCartItems = cart.filter((item) => item.id !== id);
+    setCart([...updatedCartItems]);
     // update the cookies
     const currentCookies = JSON.parse(Cookies.get('cart'));
     const newCookies = currentCookies.filter((cookie) => cookie.id !== id);
     Cookies.set('cart', JSON.stringify(newCookies));
+    // update the cartNumber for the header
+    props.setCartNumber(newCookies);
   }
 
   return (
-    <Layout>
+    <>
       <Head>
         <title>Shopping Cart</title>
         <meta name="description" content="View your shopping cart" />
       </Head>
       <div css={cartPageStyles}>
-        {cartItems.map((item) => {
-          const amountInCart = props.cookies.find(
-            (cookie) => cookie.id === item.id,
-          ).amount;
-          const total = item.price * amountInCart;
+        {cart.map((item) => {
+          const total = item.price * item.amount;
           itemTotals = [...itemTotals, total];
-
           return (
             <div css={itemStyles} key={`cartProduct-${item.id}`}>
               <Link href={`/products/${item.id}`}>
@@ -76,7 +72,7 @@ export default function Cart(props) {
                 </a>
               </Link>
               <div>
-                <p>Amount: {amountInCart}</p>
+                <p>Amount: {item.amount}</p>
                 <button onClick={() => removeItem(item.id)}>
                   Remove from Cart
                 </button>
@@ -98,20 +94,30 @@ export default function Cart(props) {
           </div>
         )}
       </div>
-    </Layout>
+    </>
   );
 }
 
 export async function getServerSideProps(context) {
-  // get the cookie info
-  const cookies = JSON.parse(context.req.cookies.cart || '[]');
-  // get the productList from the database
+  // get the list from the database
   const productList = await readAllProducts();
+  // get the cookies
+  const cookies = JSON.parse(context.req.cookies.cart || '[]');
+
+  // combine product info with cookie amount info
+  const cart = productList
+    .filter((product) => cookies.some((cookie) => cookie.id === product.id))
+    .map((product) => {
+      const amountOfItem = cookies.find(
+        (cookie) => cookie.id === product.id,
+      ).amount;
+      return { ...product, amount: amountOfItem };
+    });
 
   return {
     props: {
+      cart,
       cookies,
-      productList,
     },
   };
 }
