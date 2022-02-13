@@ -1,9 +1,8 @@
 import Head from 'next/head';
-import Layout from '../components/Layout';
 
 export default function Home() {
   return (
-    <Layout>
+    <>
       <Head>
         <title>E-commerce Mockup</title>
         <meta
@@ -14,6 +13,6 @@ export default function Home() {
 
       <h1>Welcome</h1>
       <p>This is the online storefront.</p>
-    </Layout>
+    </>
   );
 }
