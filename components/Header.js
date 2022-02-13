@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
 
 const navStyles = css`
@@ -6,7 +7,9 @@ const navStyles = css`
   z-index: 3;
   top: 0;
   width: 100vw;
-  background-color: powderblue;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 5px rgba(200, 200, 200, 0.3);
   padding: 10px;
   ul {
     display: flex;
@@ -22,7 +25,15 @@ const navStyles = css`
   }
 `;
 
-export default function Header() {
+export function itemCount(cookies) {
+  const amountOfItems = cookies.reduce((previousValue, cookie) => {
+    return previousValue + cookie.amount;
+  }, 0);
+  return amountOfItems;
+}
+
+export default function Header(props) {
+  const cookies = props.cartNumber;
   return (
     <nav css={navStyles}>
       <ul>
@@ -43,7 +54,7 @@ export default function Header() {
         </li>
         <li>
           <Link href="/cart">
-            <a>Cart</a>
+            <a>Cart ({itemCount(cookies)} items)</a>
           </Link>
         </li>
       </ul>{' '}
