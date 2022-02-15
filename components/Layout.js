@@ -17,10 +17,7 @@ export default function Layout(props) {
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header
-        cartNumber={props.cartNumber}
-        setCartNumber={props.setCartNumber}
-      />
+      <Header cartQuantity={props.cartQuantity} />
       <main css={mainStyles}>{props.children}</main>
       <Footer />
     </>
