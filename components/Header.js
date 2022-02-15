@@ -24,15 +24,7 @@ const navStyles = css`
   }
 `;
 
-export function itemCount(cookies) {
-  const amountOfItems = cookies.reduce((previousValue, cookie) => {
-    return previousValue + cookie.amount;
-  }, 0);
-  return amountOfItems;
-}
-
 export default function Header(props) {
-  const cookies = props.cartNumber;
   return (
     <nav css={navStyles}>
       <ul>
@@ -43,7 +35,7 @@ export default function Header(props) {
         </li>
         <li>
           <Link href="/products">
-            <a>Products</a>
+            <a data-test-id="products-link">Products</a>
           </Link>
         </li>
         <li>
@@ -52,8 +44,8 @@ export default function Header(props) {
           </Link>
         </li>
         <li>
-          <Link href="/cart">
-            <a>Cart ({itemCount(cookies)} items)</a>
+          <Link href="/cart" data-test-id="cart-link">
+            <a data-test-id="cart-count">Cart ({props.cartQuantity} items)</a>
           </Link>
         </li>
       </ul>{' '}
