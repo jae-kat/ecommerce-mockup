@@ -20,18 +20,25 @@ export default function ProductId(props) {
     <>
       <Head>
         <title>{props.product.title}</title>
-        <meta name="description" content={props.product.slogan} />
+        <meta name="description" content={props.product.title} />
       </Head>
       <div css={productDivStyles(props.product.color)}>
-        <img src={props.product.image} alt="the product" width="500px" />
         <h1>{props.product.title}</h1>
+        <img
+          src={props.product.image}
+          alt="the product"
+          width="500px"
+          data-test-id="product-image"
+        />
         <p>{props.product.description}</p>
-        <p>Price per item: {props.product.price}</p>
+        <p data-test-id="product-price">
+          Price per item: {props.product.price}
+        </p>
         <ModifyCart
           currentProduct={props.product.id}
           cookies={props.cookies}
-          cartNumber={props.cartNumber}
-          setCartNumber={props.setCartNumber}
+          cartCookies={props.cartCookies}
+          setCartCookies={props.setCartCookies}
         />
       </div>
     </>
