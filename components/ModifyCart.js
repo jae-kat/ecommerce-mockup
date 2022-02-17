@@ -5,7 +5,8 @@ import { useState } from 'react';
 const cartStyles = css`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  width: 170px;
   * {
     padding: 10px 15px;
   }
@@ -14,34 +15,25 @@ const cartStyles = css`
     border: 3px solid #5f6266;
     background-color: transparent;
     :hover {
-      border-image: linear-gradient(
-          45deg,
-          #d8b45080,
-          #e89d0c80,
-          #ebcd5380,
-          #d8361e80,
-          #6f0da280,
-          #c577aa80,
-          #47b9e780,
-          #67be7b80
-        )
-        30;
+      border-image: linear-gradient(45deg, #5173a6, #195b80, #ef6849, #f7c200);
       border-image-slice: 1;
+      .addButton {
+        width: 140px;
+      }
     }
   }
-`;
-
-const amountStyles = css`
-  display: flex;
+  .amountStyles {
+    display: flex;
+  }
 `;
 
 export function addOrRemoveItem(id) {
   // get the current cookies
-  const currentCookies = Cookies.get('cart') || '[]';
-  const currentCartCookies = JSON.parse(currentCookies);
-  // update the cookies
-  let newCookies;
+  const currentCartCookies = JSON.parse(Cookies.get('cart') || '[]').filter(
+    (cookie) => cookie.amount > 0,
+  );
 
+  let newCookies;
   // check if the clicked item is already in the cart
   const productIsInCart = currentCartCookies.some((cookie) => id === cookie.id);
 
@@ -52,13 +44,16 @@ export function addOrRemoveItem(id) {
   else {
     newCookies = [...currentCartCookies, { id: id, amount: 1 }];
   }
-
+  // update the cookies
+  Cookies.set('cart', JSON.stringify(newCookies));
   return newCookies;
 }
 
 export function incrementAmount(id) {
   // get the current cookie value
-  const currentCartCookies = JSON.parse(Cookies.get('cart'));
+  const currentCartCookies = JSON.parse(Cookies.get('cart')).filter(
+    (cookie) => cookie.amount > 0,
+  );
   // add 1 to the amount in the cart
   const newCookies = currentCartCookies.map((cookie) => {
     if (cookie.id === id) {
@@ -73,12 +68,15 @@ export function incrementAmount(id) {
 
 export function decrementAmount(id) {
   // get the current cookie value
-  const currentCartCookies = JSON.parse(Cookies.get('cart'));
-  // this is the cookie that needs to changing
+  const currentCartCookies = JSON.parse(Cookies.get('cart')).filter(
+    (cookie) => cookie.amount > 0,
+  );
+  // this is the cookie that needs changing
   const productCookie = currentCartCookies.find((cookie) => cookie.id === id);
   let newCookies;
+
   // delete productCookie, if the amount goes below zero
-  if (productCookie.amount - 1 === 0) {
+  if (productCookie === undefined || productCookie.amount - 1 <= 0) {
     newCookies = currentCartCookies.filter((cookie) => cookie.id !== id);
   } else {
     // else remove 1 from the amount in the cart
@@ -95,47 +93,48 @@ export function decrementAmount(id) {
 }
 
 export default function ModifyCart(props) {
-  const [amountInCart, setAmountInCart] = useState(props.cookies);
+  const cartCookies = props.cartCookies;
+  const setCartCookies = props.setCartCookies;
 
-  const productIsInCart = amountInCart.some(
-    (product) => product.id === props.currentProduct,
+  const productIsInCart = cartCookies.some(
+    (product) => product.id === props.currentProduct && product.amount > 0,
   );
 
   function addToCart(id) {
     const newCookies = addOrRemoveItem(id);
-    // update cookies and state
-    Cookies.set('cart', JSON.stringify(newCookies));
-    setAmountInCart(newCookies);
-    props.setCartNumber(newCookies);
+    // update the state
+    setCartCookies(newCookies);
   }
 
   function addOne(id) {
     const newCookies = incrementAmount(id);
     // update cookies and state
     Cookies.set('cart', JSON.stringify(newCookies));
-    setAmountInCart(newCookies);
-    props.setCartNumber(newCookies);
+    setCartCookies(newCookies);
   }
 
   function removeOne(id) {
     const newCookies = decrementAmount(id);
     // update cookie and state
     Cookies.set('cart', JSON.stringify(newCookies));
-    setAmountInCart(newCookies);
-    props.setCartNumber(newCookies);
+    setCartCookies(newCookies);
   }
 
   return (
     <div css={cartStyles}>
-      <button onClick={() => addToCart(props.currentProduct)}>
+      <button
+        onClick={() => addToCart(props.currentProduct)}
+        className="addButton"
+        data-test-id="product-add-to-cart"
+      >
         {productIsInCart ? 'Remove from cart' : 'Add to cart'}
       </button>
       {productIsInCart && (
-        <div css={amountStyles}>
+        <div className="amountStyles">
           <button onClick={() => removeOne(props.currentProduct)}>-</button>
-          <p>
+          <p data-test-id="product-quantity">
             {
-              amountInCart.find((item) => item.id === props.currentProduct)
+              cartCookies.find((item) => item.id === props.currentProduct)
                 .amount
             }
           </p>
