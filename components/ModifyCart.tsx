@@ -1,12 +1,16 @@
 import { css } from '@emotion/react';
 import Cookies from 'js-cookie';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import { decrementAmount, incrementAmount } from '../util/changeAmount';
+import { addToCart } from './addToCart';
+import { removeFromCart } from './removeFromCart';
 
+// css
 const cartStyles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 170px;
+  margin: 30px;
   * {
     padding: 10px 15px;
   }
@@ -17,15 +21,21 @@ const cartStyles = css`
     :hover {
       border-image: linear-gradient(45deg, #5173a6, #195b80, #ef6849, #f7c200);
       border-image-slice: 1;
-      .addButton {
-        width: 140px;
-      }
     }
   }
-  .amountStyles {
+  .changeAmountStyles {
     display: flex;
+    flex-direction: row;
+    * {
+      padding: 3px 6px;
+      margin: 3px;
+    }
+    p {
+      padding: 4px 0;
+    }
   }
 `;
+// typescript types
 type Cookie = { id: number; amount: number };
 type Props = {
   currentProduct: number;
@@ -33,114 +43,27 @@ type Props = {
   setCartCookies: Dispatch<SetStateAction<Cookie[]>>;
 };
 
-export function addItem(id: number) {
-  // get the current cookies
-  const currentCartCookies: Cookie[] = JSON.parse(
-    Cookies.get('cart') || '[]',
-  ).filter((cookie: Cookie) => cookie.amount > 0);
-
-  let newCookies: Cookie[];
-  // check if the clicked item is already in the cart
-  const productIsInCart = currentCartCookies.some(
-    (cookie: Cookie) => id === cookie.id,
-  );
-
-  // if the product is already in the cart, delete it
-  if (productIsInCart) {
-    newCookies = currentCartCookies;
-  } // if the product isn't in the cart, add it
-  else {
-    newCookies = [...currentCartCookies, { id: id, amount: 1 }];
-  }
-  // return the new cookie array
-
-  return newCookies;
-}
-
-export function incrementAmount(id: number) {
-  // get the current cookie value (filter out cookies with amount <= 0)
-  const currentCartCookies: Cookie[] = JSON.parse(
-    Cookies.get('cart') || '[]',
-  ).filter((cookie: Cookie) => cookie.amount > 0);
-  // check if the clicked item is already in the cart
-  const productIsInCart = currentCartCookies.some(
-    (cookie: Cookie) => id === cookie.id,
-  );
-  let newCookies: Cookie[];
-  // add 1 to the amount in the cart
-  if (productIsInCart) {
-    newCookies = currentCartCookies.map((cookie: Cookie) => {
-      if (cookie.id === id) {
-        return { ...cookie, amount: cookie.amount + 1 };
-      } else {
-        return cookie;
-      }
-    }); // or add it, if it's not yet in the cart
-  } else {
-    newCookies = [...currentCartCookies, { id: id, amount: 1 }];
-  }
-
-  return newCookies;
-}
-
-export function decrementAmount(id: number) {
-  // get the current cookie value
-  const currentCartCookies: Cookie[] = JSON.parse(
-    Cookies.get('cart') || '[]',
-  ).filter((cookie: Cookie) => cookie.amount > 0);
-  // this is the cookie that needs changing
-  const productCookie: Cookie | undefined = currentCartCookies.find(
-    (cookie: Cookie) => cookie.id === id,
-  );
-
-  let newCookies: Cookie[];
-
-  // delete productCookie, if the amount goes below zero
-  if (productCookie === undefined || productCookie.amount - 1 <= 0) {
-    newCookies = currentCartCookies.filter(
-      (cookie: Cookie) => cookie.id !== id,
-    );
-  } else {
-    // else remove 1 from the amount in the cart
-    newCookies = currentCartCookies.map((cookie: Cookie) => {
-      if (cookie.id === id) {
-        return { ...cookie, amount: cookie.amount - 1 };
-      } else {
-        return cookie;
-      }
-    });
-  }
-
-  return newCookies;
-}
-
 export default function ModifyCart(props: Props) {
-  const [quantity, setQuantity] = useState(1);
   const cartCookies = props.cartCookies;
   const setCartCookies = props.setCartCookies;
 
-  function addToCart(id: number) {
-    const newCookies = addItem(id);
-    // update the state
+  // add an item to the cart
+  function addItem(id: number) {
+    const newCookies = addToCart(id);
+    // update the state and the cookies
     setCartCookies(newCookies);
-    // update the cookies
     Cookies.set('cart', JSON.stringify(newCookies));
   }
 
-  function addOne(id: number) {
-    const newCookies = incrementAmount(id);
-    // update cookies and state
-    Cookies.set('cart', JSON.stringify(newCookies));
+  // remove an item from the cart
+  function removeItem(id: number) {
+    const newCookies = removeFromCart(id);
+    // update the state and the cookies
     setCartCookies(newCookies);
+    Cookies.set('cart', JSON.stringify(newCookies));
   }
 
-  function removeOne(id: number) {
-    const newCookies = decrementAmount(id);
-    // update cookie and state
-    Cookies.set('cart', JSON.stringify(newCookies));
-    setCartCookies(newCookies);
-  }
-
+  // show the amount of the product that's in the cart
   function productQuantity(id: number) {
     const productCookie = cartCookies.find((item: Cookie) => item.id === id);
     if (!productCookie) {
@@ -150,21 +73,48 @@ export default function ModifyCart(props: Props) {
     }
   }
 
+  // add to the quantity in the cart
+  function addOne(id: number) {
+    const newCookies = incrementAmount(id);
+    // update cookies and state
+    Cookies.set('cart', JSON.stringify(newCookies));
+    setCartCookies(newCookies);
+  }
+
+  // reduce the quantity in the cart
+  function removeOne(id: number) {
+    const newCookies = decrementAmount(id);
+    // update cookie and state
+    Cookies.set('cart', JSON.stringify(newCookies));
+    setCartCookies(newCookies);
+  }
+
   return (
     <div css={cartStyles}>
-      <div className="amountStyles" data-test-id="product-quantity">
-        <button onClick={() => removeOne(props.currentProduct)}>-</button>
-        <p>{productQuantity(props.currentProduct)}</p>
-        <button onClick={() => addOne(props.currentProduct)}>+</button>
-      </div>
-
       <button
-        onClick={() => addToCart(props.currentProduct)}
-        className="addButton"
+        onClick={() => addItem(props.currentProduct)}
         data-test-id="product-add-to-cart"
       >
         Add to cart
       </button>
+
+      <p>{productQuantity(props.currentProduct)} added to Cart</p>
+      <div className="changeAmountStyles">
+        <button onClick={() => removeOne(props.currentProduct)}>-</button>
+        <p data-test-id="product-quantity">
+          {productQuantity(props.currentProduct) === 0
+            ? 1
+            : productQuantity(props.currentProduct)}
+        </p>
+        <button onClick={() => addOne(props.currentProduct)}>+</button>
+
+        <button
+          aria-label="Remove item from cart"
+          onClick={() => removeItem(props.currentProduct)}
+        >
+          🗑️
+        </button>
+      </div>
     </div>
   );
 }
