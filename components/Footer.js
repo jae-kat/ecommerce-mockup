@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
 
 const footerStyles = css`
-  position: fixed;
-  bottom: 0;
   width: 100vw;
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(30px);
