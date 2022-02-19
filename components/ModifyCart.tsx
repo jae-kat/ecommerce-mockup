@@ -1,9 +1,9 @@
 import { css } from '@emotion/react';
 import Cookies from 'js-cookie';
 import { Dispatch, SetStateAction } from 'react';
+import { addToCart } from '../util/addToCart';
 import { decrementAmount, incrementAmount } from '../util/changeAmount';
-import { addToCart } from './addToCart';
-import { removeFromCart } from './removeFromCart';
+import { removeFromCart } from '../util/removeFromCart';
 
 // css
 const cartStyles = css`
