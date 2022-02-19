@@ -1,9 +1,19 @@
 import { css, Global } from '@emotion/react';
-import { useState } from 'react';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
-  const [cartNumber, setCartNumber] = useState([]);
+  const [cartCookies, setCartCookies] = useState([]);
+
+  // get the cookie value on first render
+  useEffect(() => {
+    setCartCookies(
+      JSON.parse(Cookies.get('cart') || '[]').filter(
+        (cookie) => cookie.amount > 0,
+      ),
+    );
+  }, []);
 
   return (
     <>
@@ -21,11 +31,11 @@ function MyApp({ Component, pageProps }) {
           }
         `}
       />
-      <Layout cartNumber={cartNumber} setCartNumber={setCartNumber}>
+      <Layout cartCookies={cartCookies}>
         <Component
           {...pageProps}
-          cartNumber={cartNumber}
-          setCartNumber={setCartNumber}
+          cartCookies={cartCookies}
+          setCartCookies={setCartCookies}
         />
       </Layout>
     </>
