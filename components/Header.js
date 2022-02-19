@@ -23,6 +23,14 @@ const navStyles = css`
     }
   }
 `;
+export function cartQuantity(cartCookies) {
+  const sum = cartCookies
+    .filter((cookie) => cookie.amount > 0)
+    .reduce((previousValue, cookie) => {
+      return previousValue + cookie.amount;
+    }, 0);
+  return sum;
+}
 
 export default function Header(props) {
   return (
@@ -45,7 +53,9 @@ export default function Header(props) {
         </li>
         <li>
           <Link href="/cart" data-test-id="cart-link">
-            <a data-test-id="cart-count">Cart ({props.cartQuantity} items)</a>
+            <a data-test-id="cart-count">
+              Cart ({cartQuantity(props.cartCookies)} items)
+            </a>
           </Link>
         </li>
       </ul>{' '}
