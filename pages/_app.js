@@ -22,11 +22,13 @@ function MyApp({ Component, pageProps }) {
           html,
           body {
             margin: 0;
-            box-sizing: border-box;
             font-family: sans-serif;
             color: #5f6266;
             button {
               cursor: pointer;
+            }
+            * {
+              box-sizing: border-box;
             }
           }
         `}
