@@ -12,26 +12,82 @@ const cartPageStyles = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  .goBack {
+    text-decoration: none;
+    color: #5f6266;
+    font-size: 1.4rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0 0.3vw;
+    :hover {
+      background-color: #48695a66;
+    }
+  }
 `;
 
 const itemStyles = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  margin: 15px;
-  border: 2px solid rgba(200, 200, 200, 0.3);
-  border-radius: 7px;
-  width: 60vw;
+  margin: 2vh 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 65vw;
+  @media screen and (max-width: 1090px) {
+    width: 70vw;
+  }
+  @media screen and (max-width: 1090px) and (min-width: 700px) {
+    width: 80vw;
+  }
+  @media screen and (max-width: 700px) {
+    width: 95vw;
+  }
+  @media screen and (max-width: 500px) {
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+  }
+
+  align-items: center;
   img {
-    border-radius: 7px;
+    border-radius: 6px;
+    margin: 2px;
+  }
+  a {
+    color: #5f6266;
+  }
+  .amount {
+    text-align: center;
+  }
+  .remove {
+    background-color: transparent;
+    padding: 0.1vw;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    img {
+      width: 20px;
+    }
+    :hover {
+      background-color: #48695a66;
+    }
   }
 `;
 
 const totalStyles = css`
   margin: 15px;
-  border: 2px solid rgba(200, 200, 200, 0.3);
-  border-radius: 7px;
   width: 60vw;
   text-align: right;
+  padding: 2vw;
+  button {
+    margin-top: 1.5vw;
+    padding: 0.8vw 1vw;
+    background-color: #48695a;
+    border: 1px solid #48695a;
+    border-radius: 6px;
+    letter-spacing: 0.1rem;
+    color: white;
+    :hover {
+      background-color: #48695acc;
+    }
+  }
 `;
 
 type Props = {
@@ -80,6 +136,11 @@ export default function Cart(props: Props) {
         <meta name="description" content="View your shopping cart" />
       </Head>
       <div css={cartPageStyles}>
+        <Link href="/products">
+          <a className="goBack" aria-label="go back to the shop">
+            🠔
+          </a>
+        </Link>
         {cart.map((item) => {
           return (
             <div
@@ -89,7 +150,7 @@ export default function Cart(props: Props) {
             >
               <Link href={`/products/${item.id}`}>
                 <a>
-                  <img src={item.image} alt="product" height="90px" />
+                  <img src={item.image} alt="product" height="150vh" />
                 </a>
               </Link>
               <Link href={`/products/${item.id}`}>
@@ -97,25 +158,30 @@ export default function Cart(props: Props) {
                   <p>{item.title}</p>
                 </a>
               </Link>
-              <p>Price per item: {item.price}</p>
-              <div>
+              <p>Price per item: €{item.price.toFixed(2)}</p>
+              <div className="amount">
                 <p>Amount: {item.amount}</p>
                 <button
                   onClick={() => removeItem(item.id)}
+                  aria-label="Delete item from cart"
+                  className="remove"
                   data-test-id={`cart-product-remove-${item.id}`}
                 >
-                  Remove from Cart
+                  <img src="/delete.svg" alt="" />
                 </button>
               </div>
             </div>
           );
         })}
         {cart.length === 0 ? (
-          'There are currently no products in your cart'
+          <p> There are currently no products in your cart</p>
         ) : (
-          <div>
-            <div css={totalStyles}>
-              Total: <span data-test-id="cart-total">{getCartSum(cart)}</span>
+          <div css={totalStyles}>
+            <div>
+              Total: €{' '}
+              <span data-test-id="cart-total">
+                {getCartSum(cart).toFixed(2)}
+              </span>
             </div>
             <Link href="/checkout">
               <a>
