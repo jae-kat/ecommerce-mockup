@@ -10,28 +10,36 @@ const cartStyles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 30px;
-  * {
-    padding: 10px 15px;
-  }
   button {
     margin: 10px;
-    border: 3px solid #5f6266;
-    background-color: transparent;
+    padding: 1.2vw 1.4vw;
+    background-color: #48695a;
+    border: 1px solid #48695a;
+    border-radius: 6px;
+    letter-spacing: 0.1rem;
+    color: white;
     :hover {
-      border-image: linear-gradient(45deg, #5173a6, #195b80, #ef6849, #f7c200);
-      border-image-slice: 1;
+      background-color: #48695acc;
     }
   }
   .changeAmountStyles {
     display: flex;
     flex-direction: row;
     * {
-      padding: 3px 6px;
-      margin: 3px;
+      padding: 0 0.6vw;
     }
-    p {
-      padding: 4px 0;
+  }
+  .remove {
+    background-color: transparent;
+    margin-right: auto;
+    margin-top: 5vh;
+    padding: 0.5vw;
+    border: 1px solid #ccc;
+    img {
+      width: 20px;
+    }
+    :hover {
+      background-color: #48695a66;
     }
   }
 `;
@@ -91,6 +99,7 @@ export default function ModifyCart(props: Props) {
 
   return (
     <div css={cartStyles}>
+      <p>{productQuantity(props.currentProduct)} in Cart</p>
       <button
         onClick={() => addItem(props.currentProduct)}
         data-test-id="product-add-to-cart"
@@ -98,7 +107,6 @@ export default function ModifyCart(props: Props) {
         Add to cart
       </button>
 
-      <p>{productQuantity(props.currentProduct)} added to Cart</p>
       <div className="changeAmountStyles">
         <button onClick={() => removeOne(props.currentProduct)}>-</button>
         <p data-test-id="product-quantity">
@@ -107,14 +115,15 @@ export default function ModifyCart(props: Props) {
             : productQuantity(props.currentProduct)}
         </p>
         <button onClick={() => addOne(props.currentProduct)}>+</button>
-
-        <button
-          aria-label="Remove item from cart"
-          onClick={() => removeItem(props.currentProduct)}
-        >
-          🗑️
-        </button>
       </div>
+
+      <button
+        aria-label="Delete item from cart"
+        className="remove"
+        onClick={() => removeItem(props.currentProduct)}
+      >
+        <img src="/delete.svg" alt="" />
+      </button>
     </div>
   );
 }
