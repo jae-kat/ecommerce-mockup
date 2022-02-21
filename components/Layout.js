@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Footer from './Footer';
-import Header from './Header';
+import Header from './Header.tsx';
 
 const mainStyles = css`
   position: relative;
