@@ -101,7 +101,7 @@ export default function Products(props: Props) {
         <title>Interior Collection Spring 2022</title>
         <meta
           name="description"
-          content="Our full range of doorways for every occasion"
+          content="Spring Collection 2022 - Guts & Jannsen"
         />
       </Head>
       <h1 css={h1Styles}>Spring Collection 2022</h1>
@@ -124,7 +124,9 @@ export default function Products(props: Props) {
               </Link>
               <div>
                 <Link href={`/products/${product.id}`}>
-                  <a className="more">Lean more ➞</a>
+                  <a className="more" aria-label={`go to ${product.title}`}>
+                    Lean more ➞
+                  </a>
                 </Link>
                 <button onClick={() => addItem(product.id)} className="buy">
                   Buy
