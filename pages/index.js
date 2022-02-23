@@ -21,7 +21,7 @@ const banner = css`
   .shopButton {
     padding: 0.8vw 1vw;
     margin: 5vh;
-    background-color: #e1e1e1cc;
+    background-color: #e1e1e1d9;
     border: 1px solid #ccc;
     border-radius: 6px;
     letter-spacing: 0.1rem;
@@ -29,7 +29,7 @@ const banner = css`
     text-decoration: none;
     font-size: 2rem;
     :hover {
-      background-color: #e1e1e1d9;
+      background-color: #e1e1e1f2;
       cursor: pointer;
       color: #48695acc;
     }
@@ -43,7 +43,7 @@ export default function Home() {
         <title>Guts & Jannsen Interiors</title>
         <meta
           name="description"
-          content="next.js e-commerce mockup - bootcamp exercise"
+          content="Welcome to the Guts & Jannsen Interior Decor Collections"
         />
       </Head>
       <div css={banner}>
