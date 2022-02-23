@@ -1,6 +1,5 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
-import Footer from './Footer';
 import Header from './Header.tsx';
 
 const mainStyles = css`
@@ -19,7 +18,6 @@ export default function Layout(props) {
       </Head>
       <Header cartCookies={props.cartCookies} />
       <main css={mainStyles}>{props.children}</main>
-      <Footer />
     </>
   );
 }
