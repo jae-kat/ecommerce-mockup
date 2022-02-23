@@ -26,9 +26,16 @@ function MyApp({ Component, pageProps }) {
             color: #5f6266;
             button {
               cursor: pointer;
+              font-size: 1.1rem;
             }
             * {
               box-sizing: border-box;
+            }
+            p {
+              font-size: 1.1rem;
+            }
+            a {
+              font-size: 1.1rem;
             }
           }
         `}
