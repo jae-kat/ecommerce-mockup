@@ -17,7 +17,12 @@ const navStyles = css`
   a {
     text-decoration: none;
     color: #5f6266;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+    padding: 6px;
+    :hover {
+      background-color: #48695a66;
+      border-radius: 6px;
+    }
   }
   .cart {
     margin-left: auto;
@@ -45,21 +50,23 @@ export function cartQuantity(cartCookies: Cookie[]) {
 
 export default function Header(props: Props) {
   return (
-    <nav css={navStyles}>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-      <Link href="/products">
-        <a data-test-id="products-link">Products</a>
-      </Link>
-      <Link href="/cart" data-test-id="cart-link">
-        <a className="cart">
-          Cart <img src="/shopping-cart.svg" alt="" height="20px" /> {'  '}
-          <span data-test-id="cart-count">
-            {cartQuantity(props.cartCookies)}
-          </span>
-        </a>
-      </Link>
-    </nav>
+    <header>
+      <nav css={navStyles}>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
+        <Link href="/products">
+          <a data-test-id="products-link">Products</a>
+        </Link>
+        <Link href="/cart" data-test-id="cart-link">
+          <a className="cart">
+            Cart <img src="/shopping-cart.svg" alt="" height="20px" /> {'  '}
+            <span data-test-id="cart-count">
+              {cartQuantity(props.cartCookies)}
+            </span>
+          </a>
+        </Link>
+      </nav>
+    </header>
   );
 }
