@@ -1,34 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Create a readme with:
+Title
+Description
+List of all technologies used
+1 or 2 screenshots
+Setup instructions
+Deployment instructions
 
-## Getting Started
+# Next.js E-commerce Store
 
-First, run the development server:
+> This is an Upleveled bootcamp project: build a (fake) e-commerce store on your own
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+<img src="/products-screen.png" alt="products overview page" height="150px" />
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies used
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Next.js
+emotion for css-in-jsx
+postgres migrations for the database
+jest for unit testing
+heroku for the deployment
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## Assignment description
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- products page with links to all the products, using dynamic routing
+- page for each single product with an 'add to cart' button and quantity input
+- cart page showing the product names and prices of the added items with the option to delete them. Plus, a total price and checkout button
+- checkout page showing the total, asking for (required) shipping and payment info, and a 'confirm order' button
+- thankyou page
+- a header showing the amount of items in the cart
 
-## Learn More
+- use cookies to store cart information
+- write some pages/components in TypeScript
+- create a postgreSQL database and table(s)
 
-To learn more about Next.js, take a look at the following resources:
+## Setup instructions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Clone the repository and install all dependencies
+`git clone https://github.com/jae-kat/ecommerce-mockup`
+`cd ecommerce-mockup`
+`yarn`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Setup a database with postgres on your computer:
 
-## Deploy on Vercel
+`psql <login>`
+`CREATE DATABASE <database name>;`
+`CREATE USER <username> WITH ENCRYPTED PASSWORD '<pw>';`
+`GRANT ALL PRIVILEGES ON DATABASE <database name> TO <user name>;`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create a .env file with the info the database needs: look at the .env.example file to see what info you have to provide
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Use migrations:
+`yarn migrate up`
+
+## Deployment instructions
+
+create an account on Heroku
+create a new app and connect to your Github repository, enable automatic deploys
+in the overview tab click 'Configure Add-On': select "Heroku Postgres"
+
+> <img src="/cart-screen.png" alt="cart overview page" height="150px" />
+> <img src="/mobile-product-screen.png" alt="products overview page" height="250px" />
