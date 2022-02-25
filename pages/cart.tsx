@@ -105,12 +105,14 @@ type CartObj = {
   price: number;
   image: string;
   title: string;
+  alt: string;
 };
 type ProductObj = {
   id: number;
   price: number;
   image: string;
   title: string;
+  alt: string;
 };
 
 export default function Cart(props: Props) {
@@ -149,8 +151,8 @@ export default function Cart(props: Props) {
               data-test-id={`cart-product-${item.id}`}
             >
               <Link href={`/products/${item.id}`}>
-                <a>
-                  <img src={item.image} alt="product" height="150vh" />
+                <a data-test-id={`go-to-product-${item.id}`}>
+                  <img src={item.image} alt={item.alt} height="150vh" />
                 </a>
               </Link>
               <Link href={`/products/${item.id}`}>
