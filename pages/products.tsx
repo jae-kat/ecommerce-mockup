@@ -124,11 +124,19 @@ export default function Products(props: Props) {
               </Link>
               <div>
                 <Link href={`/products/${product.id}`}>
-                  <a className="more" aria-label={`go to ${product.title}`}>
+                  <a
+                    className="more"
+                    data-test-id={`learn-more-${product.id}`}
+                    aria-label={`go to ${product.title}`}
+                  >
                     Lean more ➞
                   </a>
                 </Link>
-                <button onClick={() => addItem(product.id)} className="buy">
+                <button
+                  onClick={() => addItem(product.id)}
+                  className="buy"
+                  data-test-id={`buy-product-${product.id}`}
+                >
                   Buy
                 </button>
               </div>
