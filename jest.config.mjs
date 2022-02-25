@@ -1,7 +1,6 @@
 const config = {
-  // testEnvironment: 'jsdom',
-  // testPathIgnorePatterns: ['<rootDir>/integration'],
-  testPathIgnorePatterns: ['<rootDir>/util'],
+  testEnvironment: 'jsdom',
+  testPathIgnorePatterns: ['<rootDir>/integration'],
 };
 
 export default config;

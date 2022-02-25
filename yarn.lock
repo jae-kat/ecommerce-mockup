@@ -1590,6 +1590,13 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/dotenv-safe@^8.1.2":
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/@types/dotenv-safe/-/dotenv-safe-8.1.2.tgz#72f126969f445af5654efd3167deabc2cbc6c24e"
+  integrity sha512-R/B/wIMda6lRE2P1H0vwSoJsV78IOkhccE4vIvmKZQNXOIjiU0QyJsUXwSotBxOPZFZ/oOnjCa3+kK5kVJwGyw==
+  dependencies:
+    dotenv "^8.2.0"
+
 "@types/expect-puppeteer@^4.4.7":
   version "4.4.7"
   resolved "https://registry.yarnpkg.com/@types/expect-puppeteer/-/expect-puppeteer-4.4.7.tgz#fc5651b3a982dad7ddf8db1c5ac3b7b15db2b79a"
@@ -1713,6 +1720,13 @@
   version "0.16.2"
   resolved "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.2.tgz"
   integrity sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==
+
+"@types/sharp@^0.29.5":
+  version "0.29.5"
+  resolved "https://registry.yarnpkg.com/@types/sharp/-/sharp-0.29.5.tgz#9c7032d30d138ad16dde6326beaff2af757b91b3"
+  integrity sha512-3TC+S3H5RwnJmLYMHrcdfNjz/CaApKmujjY9b6PU/pE6n0qfooi99YqXGWoW8frU9EWYj/XTI35Pzxa+ThAZ5Q==
+  dependencies:
+    "@types/node" "*"
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
