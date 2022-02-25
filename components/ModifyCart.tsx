@@ -108,13 +108,23 @@ export default function ModifyCart(props: Props) {
       </button>
 
       <div className="changeAmountStyles">
-        <button onClick={() => removeOne(props.currentProduct)}>-</button>
+        <button
+          onClick={() => removeOne(props.currentProduct)}
+          data-test-id="remove-one"
+        >
+          -
+        </button>
         <p data-test-id="product-quantity">
           {productQuantity(props.currentProduct) === 0
             ? 1
             : productQuantity(props.currentProduct)}
         </p>
-        <button onClick={() => addOne(props.currentProduct)}>+</button>
+        <button
+          onClick={() => addOne(props.currentProduct)}
+          data-test-id="add-one"
+        >
+          +
+        </button>
       </div>
 
       <button
