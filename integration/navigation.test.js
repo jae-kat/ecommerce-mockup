@@ -1,5 +1,4 @@
-// it is NOT 'https://localhost:3000'!!! this fucking s
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://bootcamp-ecommerce-mockup.herokuapp.com';
 
 test('Add to cart, change quantity and remove from cart', async () => {
   // go to the website
