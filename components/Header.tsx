@@ -58,8 +58,8 @@ export default function Header(props: Props) {
         <Link href="/products">
           <a data-test-id="products-link">Products</a>
         </Link>
-        <Link href="/cart" data-test-id="cart-link">
-          <a className="cart">
+        <Link href="/cart">
+          <a data-test-id="cart-link" className="cart">
             Cart <img src="/shopping-cart.svg" alt="" height="20px" /> {'  '}
             <span data-test-id="cart-count">
               {cartQuantity(props.cartCookies)}
