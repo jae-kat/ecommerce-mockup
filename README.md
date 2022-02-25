@@ -4,10 +4,9 @@
 
 ![products overview page](https://user-images.githubusercontent.com/94120252/155329232-60af305f-71c9-40a1-bb81-019c217c6cb2.png)
 
-
 ## Technologies used
 
-Next.js, emotion for css-in-jsx, postgres migrations for the database, jest for unit testing, heroku for the deployment
+Next.js, emotion for css-in-jsx, postgres migrations for the database, jest-puppeteer for unit, heroku for the deployment
 
 ## Assignment description
 
@@ -48,10 +47,7 @@ Use migrations:
 
 ## Deployment instructions
 
-create an account on Heroku
-create a new app and connect to your Github repository, enable automatic deploys
-in the overview tab click 'Configure Add-On': select "Heroku Postgres"
-
+Create an account on Heroku. Create a new app and connect to your Github repository, enable automatic deploys. In the overview tab click 'Configure Add-On': select "Heroku Postgres"
 
 ![mobile screen product page](https://user-images.githubusercontent.com/94120252/155329350-87f9fe0d-415f-47e4-923a-1775137c595c.png)
 ![cart page](https://user-images.githubusercontent.com/94120252/155329330-11157153-d492-4a85-90e1-5a84ae7f3024.png)
