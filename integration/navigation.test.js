@@ -1,4 +1,4 @@
-const baseUrl = 'https://bootcamp-ecommerce-mockup.herokuapp.com';
+const baseUrl = 'http://bootcamp-ecommerce-mockup.herokuapp.com';
 
 test('Add to cart, change quantity and remove from cart', async () => {
   // go to the website
