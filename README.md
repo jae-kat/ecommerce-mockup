@@ -6,7 +6,11 @@
 
 ## Technologies
 
-Next.js, Emotion for CSS-in-JSX, Postgres migrations for the database, Jest-Puppeteer for unit and end-to-end testing, Heroku for the deployment
+- Next.js
+- Emotion for CSS-in-JSX
+- Postgres migrations for the database
+- Jest-Puppeteer for unit and end-to-end testing
+- Heroku for the deployment
 
 ## Assignment description
 
@@ -20,6 +24,7 @@ Next.js, Emotion for CSS-in-JSX, Postgres migrations for the database, Jest-Pupp
 - use cookies to store cart information
 - write some pages/components in TypeScript
 - create a postgreSQL database and table(s)
+- write unit tests and E2E tests
 
 ## Setup instructions
 
