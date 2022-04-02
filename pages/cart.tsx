@@ -3,7 +3,6 @@ import Cookies from 'js-cookie';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { readAllProducts } from '../util/database';
 import { getCartSum } from '../util/getCartSum';
@@ -118,7 +117,6 @@ type ProductObj = {
 
 export default function Cart(props: Props) {
   const [cart, setCart] = useState<CartObj[]>(props.cart);
-  const router = useRouter();
 
   function removeItem(id: number) {
     // update the cart state variable
@@ -187,20 +185,13 @@ export default function Cart(props: Props) {
                 {getCartSum(cart).toFixed(2)}
               </span>
             </div>
-            {/* <Link href="/checkout">
-              <a> */}
-            <button
-              data-test-id="cart-checkout"
-              onClick={() =>
-                router.push('/checkout').catch((err) => console.log(err))
-              }
-            >
-              Go to Checkout
-            </button>
-            {/* </a>
-            </Link> */}
           </div>
         )}
+        <Link href="/checkout">
+          <a>
+            <button data-test-id="cart-checkout">Go to Checkout</button>
+          </a>
+        </Link>
       </div>
     </>
   );
