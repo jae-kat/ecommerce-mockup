@@ -185,13 +185,13 @@ export default function Cart(props: Props) {
                 {getCartSum(cart).toFixed(2)}
               </span>
             </div>
+            <Link href="/checkout">
+              <a>
+                <button data-test-id="cart-checkout">Go to Checkout</button>
+              </a>
+            </Link>
           </div>
         )}
-        <Link href="/checkout">
-          <a>
-            <button data-test-id="cart-checkout">Go to Checkout</button>
-          </a>
-        </Link>
       </div>
     </>
   );
