@@ -4,9 +4,9 @@
 
 ![products overview page](https://user-images.githubusercontent.com/94120252/155329232-60af305f-71c9-40a1-bb81-019c217c6cb2.png)
 
-## Technologies used
+## Technologies
 
-Next.js, emotion for css-in-jsx, postgres migrations for the database, jest-puppeteer for unit, heroku for the deployment
+Next.js, Emotion for CSS-in-JSX, Postgres migrations for the database, Jest-Puppeteer for unit and end-to-end testing, Heroku for the deployment
 
 ## Assignment description
 
