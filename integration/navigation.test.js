@@ -1,6 +1,8 @@
+// yarn jest --config integration/jest.config.mjs
 const baseUrl = 'http://localhost:3000';
 
 test('Add to cart, change quantity and remove from cart', async () => {
+  await page.setDefaultNavigationTimeout(30000);
   // go to the website
   await page.goto(`${baseUrl}/`);
   expect(page.url()).toBe(`${baseUrl}/`);
